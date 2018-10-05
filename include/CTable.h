@@ -8,7 +8,7 @@
 #include <iostream>
 #include <cstring>
 #include <string>
-#include "../include/arrayUtils.h"
+#include "utils.h"
 
 class CTable {
     private:
@@ -20,17 +20,16 @@ class CTable {
     public:
         CTable();
         CTable(std::string name, int tableLen);
-        CTable(CTable &otherTable, bool *success);
+        CTable(CTable &otherTable, bool *p_success);
         ~CTable();
         void changeTableLength(int newLength);
-        void setElement(int index, int element, bool *success);
-        int getElement(int index, bool *success);
-        CTable clone(bool *success);
-        void copyOfTable(CTable &otherTable, bool *success);
+        void setElement(int index, int element, bool *p_success);
+        int getElement(int index, bool *p_success);
+        CTable clone(bool *p_success);
+        void copyOfTable(CTable &otherTable, bool *p_success);
         std::string toString();
         int getSize();
         std::string getName();
 };
-
 
 #endif CTABLE_CTABLE_H

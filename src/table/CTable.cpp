@@ -16,16 +16,16 @@ CTable::CTable(std::string name, int tableLen) {
     std::cout << "parameter: '" + m_name + "'" << std::endl;
 }
 
-CTable::CTable(CTable &otherTable, bool *success) {
+CTable::CTable(CTable &otherTable, bool *p_success) {
     m_name = otherTable.m_name + "_copy";
     m_size = DEFAULT_SIZE; //
     m_array = new int[m_size];
-    copyOfTable(otherTable, success);
+    copyOfTable(otherTable, p_success);
     std::cout << "kopiuj: '" + otherTable.m_name + "'" << std::endl;
 }
 
 CTable::~CTable(){
-    std::cout << "usuwam:" + m_name << endl;
+    std::cout << "usuwam:" + m_name << std::endl;
     delete [] m_array;
 }
 
@@ -38,22 +38,22 @@ bool CTable::checkIfIndexOutOfBorder(int index) {
     else return true;
 }
 
-int CTable::getElement(int index, bool *success) {
-    *success = checkIfIndexOutOfBorder(index);
-    if (*success)
+int CTable::getElement(int index, bool *p_success) {
+    *p_success = checkIfIndexOutOfBorder(index);
+    if (*p_success)
         return m_array[index];
     else
         return DEFAULT_VALUE;
 }
 
-void CTable::setElement(int index, int element, bool *success) {
-    *success = checkIfIndexOutOfBorder(index);
-    if (*success)
+void CTable::setElement(int index, int element, bool *p_success) {
+    *p_success = checkIfIndexOutOfBorder(index);
+    if (*p_success)
         m_array[index] = element;
     }
 
 
-void CTable::copyOfTable(CTable &otherTable, bool *success) {
+void CTable::copyOfTable(CTable &otherTable, bool *p_success) {
     int newSize = otherTable.getSize();
     delete [] m_array;
     m_size = newSize;
@@ -66,15 +66,15 @@ void CTable::copyOfTable(CTable &otherTable, bool *success) {
 
     // Copy elements
     for (int i = 0; i < newSize; i++) {
-        newArray[i] = otherTable.getElement(i, success);
-        if (!success) return; // ????
+        newArray[i] = otherTable.getElement(i, p_success);
+        if (!p_success) return; // ????
     }
 }
-CTable CTable::clone(bool *success) {
+CTable CTable::clone(bool *p_success) {
 //    CTable newTable = CTable();
-//    newTable.copyOfTable(*this, success);
+//    newTable.copyOfTable(*this, p_success);
 //    return newTable;
-    return CTable(*this, success);
+    return CTable(*this, p_success);
 }
 
 void CTable::changeTableLength(int newLength) {

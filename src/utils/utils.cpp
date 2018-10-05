@@ -1,4 +1,6 @@
-#include "../../include/arrayUtils.h"
+#include "../../include/utils.h"
+
+using namespace std;
 
 namespace arrayUtils {
     void fillArray(int fromIndex, int toIndex, int value, int *array) {
@@ -13,3 +15,13 @@ namespace arrayUtils {
         }
     }
 }
+
+namespace stringUtils {
+    bool isInt(string str) {
+        // check whether string can be parsed into integer
+        string::iterator iterator = str.begin();
+        while(iterator != str.end() && isdigit(*iterator)) ++iterator;
+        return !str.empty() && iterator == str.end();
+    }
+}
+
