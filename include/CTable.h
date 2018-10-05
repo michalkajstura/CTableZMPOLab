@@ -6,7 +6,6 @@
 #define DEFAULT_VALUE 0
 
 #include <iostream>
-#include <cstring>
 #include <string>
 #include "utils.h"
 

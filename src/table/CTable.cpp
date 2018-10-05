@@ -96,7 +96,7 @@ void CTable::changeTableLength(int newLength) {
 }
 
 std::string CTable::toString() {
-    std::string stringRepresentation;
+    std::string stringRepresentation = m_name + " ";
     for (int i = 0; i < m_size - 1; i++) {
         std::string stringOfNumber = std::to_string(m_array[i]) + ", ";
         stringRepresentation.append(stringOfNumber);
