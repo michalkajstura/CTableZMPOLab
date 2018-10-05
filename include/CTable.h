@@ -5,11 +5,14 @@
 #define DEFAULT_NAME "Tablica"
 #define DEFAULT_VALUE 0
 
+#include <iostream>
+#include <cstring>
 #include <string>
+#include "../include/arrayUtils.h"
 
 class CTable {
     private:
-        void fillArrayWithDefaultValue();
+        bool checkIfIndexOutOfBorder(int index);
         int *m_array;
         std::string m_name;
         int m_size;
@@ -20,10 +23,10 @@ class CTable {
         CTable(CTable &otherTable, bool *success);
         ~CTable();
         void changeTableLength(int newLength);
-        bool setElement(int index, int element);
+        void setElement(int index, int element, bool *success);
         int getElement(int index, bool *success);
-        CTable clone();
-        void copyOfTable(CTable otherTable, bool *success);
+        CTable clone(bool *success);
+        void copyOfTable(CTable &otherTable, bool *success);
         std::string toString();
         int getSize();
         std::string getName();
