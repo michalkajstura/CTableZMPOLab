@@ -5,9 +5,11 @@
 #ifndef CTABLE_TABLEMENU_H
 #define CTABLE_TABLEMENU_H
 
+#include "CMenu.h"
 
-class TableMenu {
-
+class CTableMenu: public CMenu{
+    public:
+        CTableMenu();
 };
 
 

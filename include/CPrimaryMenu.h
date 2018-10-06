@@ -5,22 +5,18 @@
 #ifndef CTABLE_MENU_H
 #define CTABLE_MENU_H
 
-#include "CTable.h"
-#include <iostream>
-#include <vector>
+#include "CMenu.h"
 
-class CPrimaryMenu {
+
+class CPrimaryMenu: public CMenu {
     private:
-        std::vector<std::string> m_menuItems;
-        std::vector<CTable> m_tables;
+    void createTable();
+    void displayAllTables();
+    void goToTable(int tableNumber);
+    void deleteAllTables();
 
     public:
         CPrimaryMenu();
-        void showMenu();
-        void createTable();
-        void displayAllTables();
-        void goToTable();
-        void deleteAllTables();
 };
 
 

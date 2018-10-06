@@ -26,6 +26,7 @@ class CTable {
         int getElement(int index, bool *p_success);
         CTable clone(bool *p_success);
         void copyOfTable(CTable &otherTable, bool *p_success);
+        void changeName(std::string newName);
         std::string toString();
         int getSize();
         std::string getName();

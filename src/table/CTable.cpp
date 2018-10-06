@@ -95,6 +95,10 @@ void CTable::changeTableLength(int newLength) {
     m_array = newArray;
 }
 
+void CTable::changeName(std::string newName) {
+    m_name = newName;
+}
+
 std::string CTable::toString() {
     std::string stringRepresentation = m_name + " ";
     for (int i = 0; i < m_size - 1; i++) {
