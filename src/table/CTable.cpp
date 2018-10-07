@@ -1,5 +1,7 @@
 #include "../../include/CTable.h"
 
+using namespace std;
+
 CTable::CTable() {
     m_name = DEFAULT_NAME;
     m_size = DEFAULT_SIZE;
@@ -18,20 +20,9 @@ CTable::CTable(std::string name, int tableLen) {
 
 CTable::CTable(const CTable &otherTable) {
     m_name = otherTable.getName() + "_copy";
-    m_size = otherTable.getSize();
-    m_array = new int[m_size];
-    bool succes;
-    for (int i = 0; i < m_size; i++) {
-        m_array[i] = otherTable.getElement(i, &succes);
-    }
-}
-
-CTable::CTable(CTable &otherTable, bool *p_success) {
-    m_name = otherTable.m_name + "_copy";
-    m_size = DEFAULT_SIZE; //
-    m_array = new int[m_size];
-    copyOfTable(otherTable, p_success);
-    std::cout << "kopiuj: '" + otherTable.m_name + "'" << std::endl;
+    m_array = nullptr;
+    copyOfTable(otherTable);
+    cout << "kopiuj: '" + otherTable.m_name + "'" << endl;
 }
 
 CTable::~CTable(){
@@ -63,7 +54,7 @@ void CTable::setElement(int index, int element, bool *p_success) {
     }
 
 
-void CTable::copyOfTable(CTable &otherTable, bool *p_success) {
+void CTable::copyOfTable(const CTable &otherTable) {
     int newSize = otherTable.getSize();
     delete [] m_array;
     m_size = newSize;
@@ -74,17 +65,20 @@ void CTable::copyOfTable(CTable &otherTable, bool *p_success) {
     // Free memory and assign a new array
     m_array = newArray;
 
+    bool success;
     // Copy elements
     for (int i = 0; i < newSize; i++) {
-        newArray[i] = otherTable.getElement(i, p_success);
-        if (!p_success) return; // ????
+        newArray[i] = otherTable.getElement(i, &success);
+        if (!success) {
+            cerr << "Kopiowanie tablicy się nie udało" << endl;
+        }
     }
 }
 CTable CTable::clone(bool *p_success) {
 //    CTable newTable = CTable();
 //    newTable.copyOfTable(*this, p_success);
 //    return newTable;
-    return CTable(*this, p_success);
+    return CTable(*this);
 }
 
 void CTable::changeTableLength(int newLength) {

@@ -3,7 +3,7 @@
 
 #define DEFAULT_SIZE 10
 #define DEFAULT_NAME "Tablica"
-#define DEFAULT_VALUE 1
+#define DEFAULT_VALUE 0
 
 #include <iostream>
 #include <string>
@@ -20,13 +20,12 @@ class CTable {
         CTable();
         CTable(std::string name, int tableLen);
         CTable(const CTable & otherTable);
-        CTable(CTable &otherTable, bool *p_success);
         ~CTable();
         void changeTableLength(int newLength);
         void setElement(int index, int element, bool *p_success);
         int getElement(int index, bool *p_success) const;
         CTable clone(bool *p_success);
-        void copyOfTable(CTable &otherTable, bool *p_success);
+        void copyOfTable(const CTable &otherTable);
         void changeName(std::string newName);
         std::string toString();
         int getSize() const;

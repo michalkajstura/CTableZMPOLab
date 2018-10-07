@@ -32,6 +32,7 @@ class CInterface {
         // Secondary menu
         void printTableLength();
         void changeTableName();
+        void changeTableLength();
         void cloneTable();
         void displayTable();
         void setTableElement();

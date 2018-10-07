@@ -7,6 +7,23 @@
 
 using namespace std;
 
+
+#ifdef __linux__
+void CInterface::waitForUser() {
+    cout << "Naciśnij enter by kontynuować" << endl;
+    system("read -s -N 1"); // Continues when pressed a key like windows
+
+}
+#endif
+
+#ifdef _WIN32
+void CInterface::waitForUser() {
+    cout << "Naciśnij enter by kontynuować" << endl;
+    system("read -s -N 1"); // Continues when pressed a key like windows
+
+}
+#endif
+
 CInterface::CInterface() {
     m_currentMenu = PRIMARY_MENU;
     m_menu = CPrimaryMenu();
@@ -14,11 +31,7 @@ CInterface::CInterface() {
 }
 
 CInterface::~CInterface(){
-    vector<CTable*>::iterator iter;
-    for (iter = m_tables.begin(); iter != m_tables.end(); iter++) {
-        delete (*iter);
-    }
-    m_tables.clear();
+    deleteAllTables();
 }
 
 void CInterface::showMenu() {
@@ -51,20 +64,21 @@ void CInterface::processPrimaryMenu(int userInput) {
         case 2: displayAllTables(); break;
         case 3: goToTable(); break;
         case 4: deleteAllTables(); break;
-        case 5: quit(); break;//TODO
+        case 5: quit(); break;
         default: cerr << "Error occurred in processPrimaryMenu" << endl;
     }
 }
 
 void CInterface::processTableMenu(int userInput) {
     switch (userInput) {
-        case 1: printTableLength();
-        case 2: changeTableName();
-        case 3: cloneTable();
-        case 4: displayTable();
-        case 5: setTableElement();
-        case 6: deleteTable();
-        case 7: backToPrimaryMenu();
+        case 1: printTableLength(); break;
+        case 2: changeTableName(); break;
+        case 3: changeTableLength(); break;
+        case 4: cloneTable(); break;
+        case 5: displayTable(); break;
+        case 6: setTableElement(); break;
+        case 7: deleteTable(); break;
+        case 8: backToPrimaryMenu(); break;
         default: cerr << "Error occurred in processTableMenu" << endl;
     }
 }
@@ -79,14 +93,10 @@ void CInterface::processInput(string userInput) {
             processTableMenu(userInputInt);
     } else {
         cout << "Niepoprawna wartość!" << endl;
+        waitForUser();
     }
 }
 
-void CInterface::waitForUser() {
-    cout << "Naciśnij dowolny klawisz by kontynuować" << endl;
-    string userInput;
-    cin >> userInput;
-}
 
 // Primary menu functions
 void CInterface::createTable() {
@@ -100,6 +110,7 @@ void CInterface::createTable() {
     if (tableName.empty()) {
         cout << "Wpisano niepoprawną nazwę tablicy. Ustawiam nazwę domyślną" << endl;
         tableName = DEFAULT_NAME;
+        waitForUser();
     }
 
     // Get size and validate
@@ -116,6 +127,7 @@ void CInterface::createTable() {
     } else {
         cout << "Wpisano niepoprawny rozmiar tablicy. Ustawiam rozmiar domyślny" << endl;
         tableSize = DEFAULT_SIZE;
+        waitForUser();
     }
 
     // Create new table and add it to list
@@ -124,14 +136,19 @@ void CInterface::createTable() {
 }
 
 void CInterface::displayAllTables() {
-    for (CTable *table: m_tables) {
-        cout << table->toString() << endl;
+    for(int i = 0; i < m_tables.size(); i++) {
+        cout << i + 1;
+        cout << ". " + m_tables.at(i)->toString() << endl;
     }
     waitForUser();
 }
 
 void CInterface::deleteAllTables() {
-    m_tables.clear(); //!!!!!!!
+    vector<CTable*>::iterator iter;
+    for (iter = m_tables.begin(); iter != m_tables.end(); iter++) {
+        delete (*iter);
+    }
+    m_tables.clear();
 }
 
 void CInterface::goToTable() {
@@ -143,12 +160,18 @@ void CInterface::goToTable() {
     if (validateInput(tableNumberString, m_tables.size())) {
         int tableNumberInt = stoi(tableNumberString);
 
+        // Decrement the value because menu is displayed from 1.
+        tableNumberInt--;
+
         // Update menus
         m_currentMenu = TABLE_MENU;
         m_menu = CTableMenu();
 
         // Update table we currently working on
         m_currentlyOperatedTable = m_tables.at(tableNumberInt);
+    } else {
+        cout << "Niepoprawny indeks tablicy!" << endl;
+        waitForUser();
     }
 }
 
@@ -170,16 +193,35 @@ void CInterface::changeTableName() {
         m_currentlyOperatedTable->changeName(newName);
     } else {
         cout << "Niepoprawna nazwa" << endl;
+        waitForUser();
+    }
+}
+
+void CInterface::changeTableLength() {
+    string newLengthString;
+    cout << "Nowa długość: ";
+    cin >> newLengthString;
+    if (stringUtils::isInt(newLengthString)) {
+        int newLenghtInt = stoi(newLengthString);
+        if (newLenghtInt >= 0) {
+            m_currentlyOperatedTable->changeTableLength(newLenghtInt);
+        } else {
+            cout << "Długość tablicy nie może być mniejsza od 0!" << endl;
+        }
+    } else {
+        cout << "Niepoprawna długość tablicy!" << endl;
+        waitForUser();
     }
 }
 
 void CInterface::cloneTable() {
-//    CTable clonedTable = CTable(*m_currentlyOperatedTable);
-//    m_tables.push_back(clonedTable);
+    CTable *clonedTable = new CTable(*m_currentlyOperatedTable);
+    m_tables.push_back(clonedTable);
 }
 
 void CInterface::displayTable() {
     cout << m_currentlyOperatedTable->toString() << endl;
+    waitForUser();
 }
 
 void CInterface::setTableElement() {
@@ -201,19 +243,23 @@ void CInterface::setTableElement() {
         m_currentlyOperatedTable->setElement(indexInt, valueInt, &success);
         if (!success) {
             cout << "Niepoprawny index!" << endl;
+            waitForUser();
         }
     } else {
         cout << "Niepoprawna wartość!" << endl;
+        waitForUser();
     }
 }
 
 void CInterface::deleteTable() {
-//    for (int i = 0; i < m_tables.size(); i++) {
-//        if (m_tables.at(i) == *m_currentlyOperatedTable) {
-//            m_tables.erase(*m_currentlyOperatedTable);
-//            return
-//        }
-//    }
+    vector<CTable*>::iterator iter = m_tables.begin();
+    while (iter != m_tables.end() &&  *iter != m_currentlyOperatedTable) iter++;
+
+    // Delete CTable object and erase pointer from m_tables
+    delete (*iter);
+    m_tables.erase(iter);
+
+    backToPrimaryMenu();
 }
 
 void CInterface::backToPrimaryMenu() {
@@ -223,7 +269,7 @@ void CInterface::backToPrimaryMenu() {
 
 void CInterface::run() {
     while(!m_exitLoop) {
-//        cout << string(100, '\n'); // clear
+        cout << string(100, '\n'); // clear
         showMenu();
         string userInput = getUserInput();
         processInput(userInput);
