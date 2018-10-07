@@ -3,6 +3,7 @@
 //
 
 #include "../../include/CInterface.h"
+#include "../../include/CTable.h"
 
 using namespace std;
 
@@ -13,6 +14,11 @@ CInterface::CInterface() {
 }
 
 CInterface::~CInterface(){
+    vector<CTable*>::iterator iter;
+    for (iter = m_tables.begin(); iter != m_tables.end(); iter++) {
+        delete (*iter);
+    }
+    m_tables.clear();
 }
 
 void CInterface::showMenu() {
@@ -113,19 +119,19 @@ void CInterface::createTable() {
     }
 
     // Create new table and add it to list
-    CTable table = CTable(tableName, tableSize);
+    CTable *table = new CTable(tableName, tableSize);
     m_tables.push_back(table);
 }
 
 void CInterface::displayAllTables() {
-    for (CTable &table: m_tables) {
-        cout << table.toString() << endl;
+    for (CTable *table: m_tables) {
+        cout << table->toString() << endl;
     }
     waitForUser();
 }
 
 void CInterface::deleteAllTables() {
-    m_tables.clear();
+    m_tables.clear(); //!!!!!!!
 }
 
 void CInterface::goToTable() {
@@ -142,7 +148,7 @@ void CInterface::goToTable() {
         m_menu = CTableMenu();
 
         // Update table we currently working on
-        m_currentlyOperatedTable = &m_tables.at(tableNumberInt);
+        m_currentlyOperatedTable = m_tables.at(tableNumberInt);
     }
 }
 
@@ -168,8 +174,8 @@ void CInterface::changeTableName() {
 }
 
 void CInterface::cloneTable() {
-    CTable clonedTable = CTable(*m_currentlyOperatedTable);
-    m_tables.push_back(clonedTable);
+//    CTable clonedTable = CTable(*m_currentlyOperatedTable);
+//    m_tables.push_back(clonedTable);
 }
 
 void CInterface::displayTable() {

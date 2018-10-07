@@ -16,6 +16,16 @@ CTable::CTable(std::string name, int tableLen) {
     std::cout << "parameter: '" + m_name + "'" << std::endl;
 }
 
+CTable::CTable(const CTable &otherTable) {
+    m_name = otherTable.getName() + "_copy";
+    m_size = otherTable.getSize();
+    m_array = new int[m_size];
+    bool succes;
+    for (int i = 0; i < m_size; i++) {
+        m_array[i] = otherTable.getElement(i, &succes);
+    }
+}
+
 CTable::CTable(CTable &otherTable, bool *p_success) {
     m_name = otherTable.m_name + "_copy";
     m_size = DEFAULT_SIZE; //
@@ -29,16 +39,16 @@ CTable::~CTable(){
     delete [] m_array;
 }
 
-int CTable::getSize() {
+int CTable::getSize() const {
     return m_size;
 }
 
-bool CTable::checkIfIndexOutOfBorder(int index) {
+bool CTable::checkIfIndexOutOfBorder(int index) const {
     if (index < 0 || index >= m_size) return false;
     else return true;
 }
 
-int CTable::getElement(int index, bool *p_success) {
+int CTable::getElement(int index, bool *p_success) const {
     *p_success = checkIfIndexOutOfBorder(index);
     if (*p_success)
         return m_array[index];
@@ -93,6 +103,10 @@ void CTable::changeTableLength(int newLength) {
     delete [] m_array;
     m_size = newLength;
     m_array = newArray;
+}
+
+std::string CTable::getName() const {
+    return m_name;
 }
 
 void CTable::changeName(std::string newName) {

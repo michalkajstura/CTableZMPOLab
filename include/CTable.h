@@ -3,7 +3,7 @@
 
 #define DEFAULT_SIZE 10
 #define DEFAULT_NAME "Tablica"
-#define DEFAULT_VALUE 0
+#define DEFAULT_VALUE 1
 
 #include <iostream>
 #include <string>
@@ -11,7 +11,7 @@
 
 class CTable {
     private:
-        bool checkIfIndexOutOfBorder(int index);
+        bool checkIfIndexOutOfBorder(int index) const;
         int *m_array;
         std::string m_name;
         int m_size;
@@ -19,17 +19,18 @@ class CTable {
     public:
         CTable();
         CTable(std::string name, int tableLen);
+        CTable(const CTable & otherTable);
         CTable(CTable &otherTable, bool *p_success);
         ~CTable();
         void changeTableLength(int newLength);
         void setElement(int index, int element, bool *p_success);
-        int getElement(int index, bool *p_success);
+        int getElement(int index, bool *p_success) const;
         CTable clone(bool *p_success);
         void copyOfTable(CTable &otherTable, bool *p_success);
         void changeName(std::string newName);
         std::string toString();
-        int getSize();
-        std::string getName();
+        int getSize() const;
+        std::string getName() const;
 };
 
 #endif CTABLE_CTABLE_H

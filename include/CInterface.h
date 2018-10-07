@@ -38,7 +38,7 @@ class CInterface {
         void deleteTable();
         void backToPrimaryMenu();
 
-        std::vector<CTable> m_tables;
+        std::vector<CTable*> m_tables;
         CTable *m_currentlyOperatedTable;
         int m_currentMenu;
         CMenu m_menu;
