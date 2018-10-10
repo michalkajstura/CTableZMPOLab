@@ -1,30 +1,9 @@
-//
-// Created by michal on 05.10.18.
-//
-
 #include "../../include/CInterface.h"
 #include "../../include/CTable.h"
 
 using namespace std;
 
-
-#ifdef __linux__
-void CInterface::waitForUser() {
-    cout << "Naciśnij enter by kontynuować" << endl;
-    system("read -s -N 1"); // Continues when pressed a key like windows
-
-}
-#endif
-
-#ifdef _WIN32
-void CInterface::waitForUser() {
-    cout << "Naciśnij enter by kontynuować" << endl;
-    system("read -s -N 1"); // Continues when pressed a key like windows
-
-}
-#endif
-
-CInterface::CInterface() {
+CInterface::CInterface(){
     m_currentMenu = PRIMARY_MENU;
     m_menu = CPrimaryMenu();
     m_exitLoop = false;
@@ -34,8 +13,21 @@ CInterface::~CInterface(){
     deleteAllTables();
 }
 
+
 void CInterface::showMenu() {
     m_menu.showMenu();
+}
+
+void CInterface::waitForUser() {
+    cin.ignore();
+    do
+    {
+        cout << '\n' << "Naciśnij enter by kontynuować";
+    } while (cin.get() != '\n');
+}
+
+void CInterface::clearScreen() {
+    cout << string(100, '\n'); // clear
 }
 
 string CInterface::getUserInput() {
@@ -84,7 +76,7 @@ void CInterface::processTableMenu(int userInput) {
 }
 
 void CInterface::processInput(string userInput) {
-    bool inputIsCorrect = validateInput(userInput, m_menu.numbeOfMenuItems());
+    bool inputIsCorrect = validateInput(userInput, m_menu.numberOfMenuItems());
     if (inputIsCorrect) {
         int userInputInt = stoi(userInput);
         if (m_currentMenu == PRIMARY_MENU)
@@ -163,12 +155,13 @@ void CInterface::goToTable() {
         // Decrement the value because menu is displayed from 1.
         tableNumberInt--;
 
+        // Update table we currently working on
+        m_currentlyOperatedTable = m_tables.at(tableNumberInt);
+
         // Update menus
         m_currentMenu = TABLE_MENU;
         m_menu = CTableMenu();
 
-        // Update table we currently working on
-        m_currentlyOperatedTable = m_tables.at(tableNumberInt);
     } else {
         cout << "Niepoprawny indeks tablicy!" << endl;
         waitForUser();
@@ -269,10 +262,9 @@ void CInterface::backToPrimaryMenu() {
 
 void CInterface::run() {
     while(!m_exitLoop) {
-        cout << string(100, '\n'); // clear
+        clearScreen();
         showMenu();
         string userInput = getUserInput();
         processInput(userInput);
-        // m_tables przechowuje kopie
     }
 }

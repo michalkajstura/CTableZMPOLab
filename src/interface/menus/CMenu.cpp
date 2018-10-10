@@ -1,7 +1,3 @@
-//
-// Created by michal on 06.10.18.
-//
-
 #include "../../../include/CMenu.h"
 #include "../../../include/CInterface.h"
 
@@ -17,7 +13,7 @@ void CMenu::showMenu() {
     }
 }
 
-int CMenu::numbeOfMenuItems() {
+int CMenu::numberOfMenuItems() {
     return m_menuItems.size();
 }
 

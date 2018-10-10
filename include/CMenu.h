@@ -1,12 +1,9 @@
-//
-// Created by michal on 06.10.18.
-//
-
 #ifndef CTABLE_CMENU_H
 #define CTABLE_CMENU_H
 
 #include <iostream>
 #include <vector>
+#include "CTable.h"
 
 class CMenu {
     protected:
@@ -15,8 +12,7 @@ class CMenu {
     public:
         ~CMenu();
         void showMenu();
-        int numbeOfMenuItems();
+        int numberOfMenuItems();
 };
-
 
 #endif CTABLE_CMENU_H

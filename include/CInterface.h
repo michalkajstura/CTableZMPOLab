@@ -16,13 +16,14 @@ class CInterface {
     private:
         void showMenu();
         std::string getUserInput();
+        void clearScreen();
         bool validateInput(std::string userInput, int rangeOfInput);
         void processInput(std::string userInput);
-        void processPrimaryMenu(int userInput);
-        void processTableMenu(int userInput);
+        CMenu *getCurrentMenu();
         void waitForUser();
 
         // Primary menu
+        void processPrimaryMenu(int userInput);
         void createTable();
         void displayAllTables();
         void goToTable();
@@ -30,6 +31,7 @@ class CInterface {
         void quit();
 
         // Secondary menu
+        void processTableMenu(int userInput);
         void printTableLength();
         void changeTableName();
         void changeTableLength();
@@ -50,6 +52,5 @@ class CInterface {
         ~CInterface();
         void run();
 };
-
 
 #endif //CTABLE_CINTERFACE_H

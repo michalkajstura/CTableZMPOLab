@@ -75,9 +75,6 @@ void CTable::copyOfTable(const CTable &otherTable) {
     }
 }
 CTable CTable::clone(bool *p_success) {
-//    CTable newTable = CTable();
-//    newTable.copyOfTable(*this, p_success);
-//    return newTable;
     return CTable(*this);
 }
 
