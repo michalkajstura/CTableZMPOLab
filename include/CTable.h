@@ -1,10 +1,6 @@
 #ifndef CTABLE_CTABLE_H
 #define CTABLE_CTABLE_H
 
-#define DEFAULT_SIZE 10
-#define DEFAULT_NAME "Tablica"
-#define DEFAULT_VALUE 0
-
 #include <iostream>
 #include <string>
 #include "utils.h"
@@ -28,6 +24,7 @@ class CTable {
         void copyOfTable(const CTable &otherTable);
         void changeName(std::string newName);
         std::string toString();
+        void doubleArray();
         int getSize() const;
         std::string getName() const;
 };

@@ -2,12 +2,22 @@
 
 using namespace std;
 
+const int DEFAULT_SIZE = 10;
+const int DEFAULT_VALUE = 0;
+const string DEFAULT_NAME = "Tablica";
+const string COPY = "_copy";
+const string NO_PARAMETERS = "bezb: ";
+const string WITH_PARAMETERS = "param: ";
+const string COPY_MESSAGE = "kopiuj: ";
+const string DELETE_MESSAGE = "usuwam: ";
+const string COPY_OF_TABLE_FAILED = "Kopiowanie tablicy się nie powiodło";
+
 CTable::CTable() {
     m_name = DEFAULT_NAME;
     m_size = DEFAULT_SIZE;
     m_array = new int[m_size];
     arrayUtils::fillArray(0, m_size, DEFAULT_VALUE, m_array);
-    std::cout << "bezp: '" + m_name + "'";
+    cout << NO_PARAMETERS + m_name;
 }
 
 CTable::CTable(std::string name, int tableLen) {
@@ -15,23 +25,36 @@ CTable::CTable(std::string name, int tableLen) {
     m_size = tableLen;
     m_array = new int[m_size];
     arrayUtils::fillArray(0, m_size, DEFAULT_VALUE, m_array);
-    std::cout << "parameter: '" + m_name + "'" << std::endl;
+    cout << WITH_PARAMETERS + m_name << endl;
 }
 
 CTable::CTable(const CTable &otherTable) {
-    m_name = otherTable.getName() + "_copy";
+    m_name = otherTable.getName() + COPY;
     m_array = nullptr;
     copyOfTable(otherTable);
-    cout << "kopiuj: '" + otherTable.m_name + "'" << endl;
+    cout << COPY_MESSAGE + otherTable.m_name << endl;
 }
 
 CTable::~CTable(){
-    std::cout << "usuwam:" + m_name << std::endl;
+    std::cout << DELETE_MESSAGE + m_name << std::endl;
     delete [] m_array;
 }
 
 int CTable::getSize() const {
     return m_size;
+}
+
+void CTable::doubleArray() {
+    int newSize = m_size * 2;
+    int *newArray = new int[newSize];
+
+    for (int i=0; i<newSize; i++) {
+        newArray[i] = m_array[i%m_size];
+    }
+
+    m_size = newSize;
+    delete [] m_array;
+    m_array = newArray;
 }
 
 bool CTable::checkIfIndexOutOfBorder(int index) const {
@@ -70,7 +93,7 @@ void CTable::copyOfTable(const CTable &otherTable) {
     for (int i = 0; i < newSize; i++) {
         newArray[i] = otherTable.getElement(i, &success);
         if (!success) {
-            cerr << "Kopiowanie tablicy się nie udało" << endl;
+            cerr << COPY_OF_TABLE_FAILED << endl;
         }
     }
 }
@@ -96,7 +119,7 @@ void CTable::changeTableLength(int newLength) {
     m_array = newArray;
 }
 
-std::string CTable::getName() const {
+string CTable::getName() const {
     return m_name;
 }
 
@@ -104,14 +127,14 @@ void CTable::changeName(std::string newName) {
     m_name = newName;
 }
 
-std::string CTable::toString() {
-    std::string stringRepresentation = m_name + " ";
+string CTable::toString() {
+    string stringRepresentation = m_name + " ";
     for (int i = 0; i < m_size - 1; i++) {
-        std::string stringOfNumber = std::to_string(m_array[i]) + ", ";
+        std::string stringOfNumber = to_string(m_array[i]) + ", ";
         stringRepresentation.append(stringOfNumber);
     }
     // Append last element without comma and space
-    stringRepresentation.append(std::to_string(m_array[m_size - 1]));
+    stringRepresentation.append(to_string(m_array[m_size - 1]));
     return stringRepresentation;
 }
 

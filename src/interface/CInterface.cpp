@@ -3,6 +3,37 @@
 
 using namespace std;
 
+const int PRIMARY_MENU = 0;
+const int TABLE_MENU = 1;
+const int CREATE_TABLE = 1;
+const int DISPLAY_ALL_TABLES = 2;
+const int GO_TO_TABLE = 3;
+const int DELETE_ALL_TABLES = 4;
+const int QUIT = 5;
+const int DEFAULT_SIZE = 10;
+const int PRINT_TABLE_LENGTH = 1;
+const int CHANGE_TABLE_NAME = 2;
+const int CHANGE_TABLE_LENGTH = 3;
+const int CLONE_TABLE = 4;
+const int DISPLAY_TABLE = 5;
+const int SET_TABLE_ELEMENT = 6;
+const int DELETE_TABLE = 7;
+const int DOUBLE_ARRAY = 8;
+const int BACK_TO_PRIMARY_MENU = 9;
+const string DEFAULT_NAME = "Tablica";
+const string ERROR_PRIMARY_MENU = "Error occurred in processPrimaryMenu";
+const string ERROR_TABLE_MENU = "Error occurred in processTableMenu";
+const string ERROR_NAME_OF_TABLE = "Wpisano niepoprawną nazwę tablicy.";
+const string ERROR_INDEX_OF_TABLE = "Wpisano niepoprawny indeks tablicy.";
+const string ERROR_LENGTH_OF_TABLE = "Wpisano niepoprawną długość tablicy.";
+const string ERROR_VALUE= "Wpisano niepoprawną wartość.";
+const string PRESS_ENTER = "Naciśnij enter by kontynuować";
+const string VALUE_MESSAGE = "Wartość: ";
+const string INDEX_MESSAGE = "Indeks: ";
+const string NEW_LENGTH_MESSAGE = "Nowa długość: ";
+const string NEW_NAME_MESSAGE = "Nowa nazwa: ";
+const string SIZE_MESSAGE = "Rozmiar: ";
+
 CInterface::CInterface(){
     m_currentMenu = PRIMARY_MENU;
     m_menu = CPrimaryMenu();
@@ -22,7 +53,7 @@ void CInterface::waitForUser() {
     cin.ignore();
     do
     {
-        cout << '\n' << "Naciśnij enter by kontynuować";
+        cout << '\n' << PRESS_ENTER;
     } while (cin.get() != '\n');
 }
 
@@ -52,26 +83,27 @@ bool CInterface::validateInput(string userInput, int rangeOfInput) {
 
 void CInterface::processPrimaryMenu(int userInput) {
     switch (userInput) {
-        case 1: createTable(); break;
-        case 2: displayAllTables(); break;
-        case 3: goToTable(); break;
-        case 4: deleteAllTables(); break;
-        case 5: quit(); break;
-        default: cerr << "Error occurred in processPrimaryMenu" << endl;
+        case CREATE_TABLE: createTable(); break;
+        case DISPLAY_ALL_TABLES: displayAllTables(); break;
+        case GO_TO_TABLE: goToTable(); break;
+        case DELETE_ALL_TABLES: deleteAllTables(); break;
+        case QUIT: quit(); break;
+        default: cerr << ERROR_PRIMARY_MENU << endl;
     }
 }
 
 void CInterface::processTableMenu(int userInput) {
     switch (userInput) {
-        case 1: printTableLength(); break;
-        case 2: changeTableName(); break;
-        case 3: changeTableLength(); break;
-        case 4: cloneTable(); break;
-        case 5: displayTable(); break;
-        case 6: setTableElement(); break;
-        case 7: deleteTable(); break;
-        case 8: backToPrimaryMenu(); break;
-        default: cerr << "Error occurred in processTableMenu" << endl;
+        case PRINT_TABLE_LENGTH: printTableLength(); break;
+        case CHANGE_TABLE_NAME: changeTableName(); break;
+        case CHANGE_TABLE_LENGTH: changeTableLength(); break;
+        case CLONE_TABLE: cloneTable(); break;
+        case DISPLAY_TABLE: displayTable(); break;
+        case SET_TABLE_ELEMENT: setTableElement(); break;
+        case DELETE_TABLE: deleteTable(); break;
+        case DOUBLE_ARRAY: doubleArray(); break;
+        case BACK_TO_PRIMARY_MENU: backToPrimaryMenu(); break;
+        default: cerr << ERROR_TABLE_MENU << endl;
     }
 }
 
@@ -84,7 +116,7 @@ void CInterface::processInput(string userInput) {
         else
             processTableMenu(userInputInt);
     } else {
-        cout << "Niepoprawna wartość!" << endl;
+        cout << ERROR_VALUE << endl;
         waitForUser();
     }
 }
@@ -100,14 +132,14 @@ void CInterface::createTable() {
     cout << "\n";
 
     if (tableName.empty()) {
-        cout << "Wpisano niepoprawną nazwę tablicy. Ustawiam nazwę domyślną" << endl;
+        cout << ERROR_NAME_OF_TABLE << endl;
         tableName = DEFAULT_NAME;
         waitForUser();
     }
 
     // Get size and validate
     string tableSizeString;
-    cout << "Rozmiar: ";
+    cout << SIZE_MESSAGE;
     cin >> tableSizeString;
     cout << "\n";
 
@@ -116,15 +148,14 @@ void CInterface::createTable() {
     // Check if size is greater then 0
     if (validateInput(tableSizeString, INT32_MAX)) {
         tableSize = stoi(tableSizeString);
+
+        // Create new table and add it to list
+        CTable *table = new CTable(tableName, tableSize);
+        m_tables.push_back(table);
     } else {
-        cout << "Wpisano niepoprawny rozmiar tablicy. Ustawiam rozmiar domyślny" << endl;
-        tableSize = DEFAULT_SIZE;
+        cout << ERROR_INDEX_OF_TABLE << endl;
         waitForUser();
     }
-
-    // Create new table and add it to list
-    CTable *table = new CTable(tableName, tableSize);
-    m_tables.push_back(table);
 }
 
 void CInterface::displayAllTables() {
@@ -145,7 +176,7 @@ void CInterface::deleteAllTables() {
 
 void CInterface::goToTable() {
     string tableNumberString;
-    cout << "Tablica: ";
+    cout << DEFAULT_NAME + ": ";
     cin >> tableNumberString;
 
     // Validate number
@@ -163,7 +194,7 @@ void CInterface::goToTable() {
         m_menu = CTableMenu();
 
     } else {
-        cout << "Niepoprawny indeks tablicy!" << endl;
+        cout << ERROR_INDEX_OF_TABLE << endl;
         waitForUser();
     }
 }
@@ -174,35 +205,36 @@ void CInterface::quit() {
 
 // Table menu functions
 void CInterface::printTableLength() {
-    cout << "Rozmiar: ";
+    cout << SIZE_MESSAGE;
     cout<< m_currentlyOperatedTable->getSize() << endl;
+    waitForUser();
 }
 
 void CInterface::changeTableName() {
     string newName;
-    cout << "Nowa nazwa: ";
+    cout << NEW_NAME_MESSAGE;
     cin >> newName;
     if (!newName.empty()) {
         m_currentlyOperatedTable->changeName(newName);
     } else {
-        cout << "Niepoprawna nazwa" << endl;
+        cout << ERROR_NAME_OF_TABLE << endl;
         waitForUser();
     }
 }
 
 void CInterface::changeTableLength() {
     string newLengthString;
-    cout << "Nowa długość: ";
+    cout << NEW_LENGTH_MESSAGE;
     cin >> newLengthString;
     if (stringUtils::isInt(newLengthString)) {
         int newLenghtInt = stoi(newLengthString);
         if (newLenghtInt >= 0) {
             m_currentlyOperatedTable->changeTableLength(newLenghtInt);
         } else {
-            cout << "Długość tablicy nie może być mniejsza od 0!" << endl;
+            cout << ERROR_LENGTH_OF_TABLE << endl;
         }
     } else {
-        cout << "Niepoprawna długość tablicy!" << endl;
+        cout << ERROR_LENGTH_OF_TABLE << endl;
         waitForUser();
     }
 }
@@ -221,11 +253,11 @@ void CInterface::setTableElement() {
 
     // Get index and value
     string indexString;
-    cout << "Indeks: ";
+    cout << INDEX_MESSAGE;
     cin >> indexString;
 
     string valueString;
-    cout << "Wartość: ";
+    cout << VALUE_MESSAGE;
     cin >> valueString;
 
     // Validate value
@@ -235,11 +267,11 @@ void CInterface::setTableElement() {
         int indexInt = stoi(indexString);
         m_currentlyOperatedTable->setElement(indexInt, valueInt, &success);
         if (!success) {
-            cout << "Niepoprawny index!" << endl;
+            cout << ERROR_INDEX_OF_TABLE << endl;
             waitForUser();
         }
     } else {
-        cout << "Niepoprawna wartość!" << endl;
+        cout << ERROR_VALUE << endl;
         waitForUser();
     }
 }
@@ -267,4 +299,8 @@ void CInterface::run() {
         string userInput = getUserInput();
         processInput(userInput);
     }
+}
+
+void CInterface::doubleArray() {
+    m_currentlyOperatedTable->doubleArray();
 }

@@ -8,8 +8,6 @@
 #include "CMenu.h"
 #include "CPrimaryMenu.h"
 #include "CTableMenu.h"
-#define PRIMARY_MENU 0
-#define TABLE_MENU 1
 
 class CInterface {
 
@@ -19,7 +17,6 @@ class CInterface {
         void clearScreen();
         bool validateInput(std::string userInput, int rangeOfInput);
         void processInput(std::string userInput);
-        CMenu *getCurrentMenu();
         void waitForUser();
 
         // Primary menu
@@ -39,6 +36,7 @@ class CInterface {
         void displayTable();
         void setTableElement();
         void deleteTable();
+        void doubleArray();
         void backToPrimaryMenu();
 
         std::vector<CTable*> m_tables;

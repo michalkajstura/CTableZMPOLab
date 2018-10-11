@@ -8,6 +8,7 @@ CTableMenu::CTableMenu() {
     m_menuItems.push_back("Wyświetl tablicę");
     m_menuItems.push_back("Ustaw komórkę tablicy");
     m_menuItems.push_back("Skasuj tablicę");
+    m_menuItems.push_back("Podwój tablicę");
     m_menuItems.push_back("Wróć");
 }
 
