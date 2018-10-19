@@ -6,7 +6,7 @@
 #include "CMenuItem.h"
 #include "CMenuCommand.h"
 
-class CMenu: CMenuItem {
+class CMenu: public CMenuItem {
     private:
         void showName();
         void showCommands();
@@ -14,6 +14,7 @@ class CMenu: CMenuItem {
         int validateUserInput(std::string command);
         void matchCommand(int commandIndex);
         std::vector<CMenuItem*> m_commands;
+        bool m_nextIter;
 
     public:
         CMenu(std::string commandName, std::string name);
@@ -21,7 +22,8 @@ class CMenu: CMenuItem {
         std::string getName() override;
         std::string getCommandName() override;
         void run() override;
-        void addCommand(CMenuCommand *command);
+        void addMenuItem(CMenuItem *command);
+        bool checkQuitLoop(std::string userInput);
 };
 
 #endif CTABLE_CMENU_H

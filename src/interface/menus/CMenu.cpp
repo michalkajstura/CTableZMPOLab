@@ -11,6 +11,7 @@ const string DEFAULT_NAME = "Menu domyślne";
 CMenu::CMenu(std::string commandName, std::string name=DEFAULT_NAME) {
     m_name = name;
     m_commandName = commandName;
+    m_nextIter = true;
 }
 
 CMenu::~CMenu() {
@@ -18,11 +19,17 @@ CMenu::~CMenu() {
 }
 
 void CMenu::run() {
-    showName();
-    showCommands();
-    string userInput = getUserInput();
-    int commandIndex = validateUserInput(userInput);
-    matchCommand(commandIndex);
+    while(m_nextIter) {
+        showName();
+        showCommands();
+        string userInput = getUserInput();
+        if (checkQuitLoop(userInput)) {
+            m_nextIter = false;
+        } else {
+            int commandIndex = validateUserInput(userInput);
+            matchCommand(commandIndex);
+        }
+    }
 }
 
 void CMenu::showName() {
@@ -44,10 +51,13 @@ std::string CMenu::getUserInput() {
 }
 
 int CMenu::validateUserInput(string command) {
+    // Split input by spaces
+    vector<string> commands = stringUtils::splitString(command);
+
     // Check if command is in the list
     int commandIndex = COMMAND_NOT_IN_LIST;
     for(int i=0; i<m_commands.size(); i++) {
-        if (m_commands.at(i)->getCommandName() == command)
+        if (m_commands.at(i)->getCommandName() == commands.at(0))
             commandIndex = i;
     }
     return commandIndex;
@@ -69,6 +79,10 @@ std::string CMenu::getCommandName() {
     return m_commandName;
 }
 
-void CMenu::addCommand(CMenuCommand *command) {
+void CMenu::addMenuItem(CMenuItem *command){
     m_commands.push_back(command);
+}
+
+bool CMenu::checkQuitLoop(string userInput) {
+    return (userInput == "back") ? true: false;
 }
