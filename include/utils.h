@@ -6,6 +6,8 @@
 #define CTABLE_ARRAYUTILS_H
 
 #include <iostream>
+#include <vector>
+#include <string>
 
 namespace arrayUtils {
     void fillArray(int fromIndex, int toIndex, int value, int *array);
@@ -14,6 +16,10 @@ namespace arrayUtils {
 
 namespace stringUtils {
     bool isInt(std::string str);
+    std::vector<std::string> splitString(std::string userInput);
 }
 
+namespace inputUtils {
+    void waitForUser();
+}
 #endif //CTABLE_ARRAYUTILS_H
