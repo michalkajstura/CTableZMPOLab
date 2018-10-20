@@ -7,11 +7,14 @@
 class CTableManager {
     private:
         std::vector<CTable*> m_tables;
+        CTable* m_currentTable;
     public:
         void addTable(CTable *newTable);
         CTable *getTable(int index);
         int getSize();
         void clear();
+        CTable* getCurrentTable();
+        void setCurrentTable(int index);
 };
 
 #endif //CTABLE_CTABLEMANAGER_H

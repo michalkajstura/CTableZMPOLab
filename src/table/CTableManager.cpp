@@ -17,3 +17,11 @@ int CTableManager::getSize() {
 void CTableManager::clear() {
     m_tables.clear();
 }
+
+CTable* CTableManager::getCurrentTable() {
+    return m_currentTable;
+}
+
+void CTableManager::setCurrentTable(int index) {
+    m_currentTable = m_tables.at(index);
+}

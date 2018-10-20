@@ -39,7 +39,7 @@ void CMenu::showName() {
 void CMenu::showCommands() {
     for(int i=0; i<m_commands.size(); i++) {
         cout << to_string(i) + "." + m_commands.at(i)->getName()
-                + '(' + m_commands.at(i)->getCommandName() + ')' << endl;
+                + " (" + m_commands.at(i)->getCommandName() + ')' << endl;
     }
 }
 
