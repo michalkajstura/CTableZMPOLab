@@ -15,7 +15,10 @@ CMenu::CMenu(std::string commandName, std::string name=DEFAULT_NAME) {
 }
 
 CMenu::~CMenu() {
-
+    for (vector<CMenuItem*>::iterator iter = m_commands.begin(); iter != m_commands.end(); iter++) {
+        CMenuItem *temp = *iter;
+        delete temp;
+    }
 }
 
 void CMenu::run() {
@@ -84,5 +87,5 @@ void CMenu::addMenuItem(CMenuItem *command){
 }
 
 bool CMenu::checkQuitLoop(string userInput) {
-    return (userInput == "back") ? true: false;
+    return userInput == "back";
 }

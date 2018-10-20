@@ -2,6 +2,10 @@
 
 using namespace std;
 
+CTableManager::~CTableManager() {
+    clear();
+}
+
 CTable* CTableManager::getTable(int index) {
     return m_tables.at(index);
 }
@@ -15,7 +19,10 @@ int CTableManager::getSize() {
 }
 
 void CTableManager::clear() {
-    m_tables.clear();
+    for (vector<CTable*>::iterator iter = m_tables.begin(); iter != m_tables.end(); iter++) {
+        CTable *temp = *iter;
+        delete temp;
+    }
 }
 
 CTable* CTableManager::getCurrentTable() {

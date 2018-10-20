@@ -21,17 +21,17 @@ bool CChooseTable::validateIndex(std::string userInput) {
 void CChooseTable::initTableMenu() {
     CMenu tableMenu("Table menu", "tab");
 
-    CSetTableElement setElement(getTableManager());
-    CCloneTable cloneTable(getTableManager());
-    CChangeTableLength changeLength(getTableManager());
+    CCommand *setElement = new  CSetTableElement(getTableManager());
+    CCommand *cloneTable = new CCloneTable(getTableManager());
+    CCommand *changeLength = new CChangeTableLength(getTableManager());
 
-    CMenuCommand setElementMenu(setElement, "set", "Ustaw element");
-    CMenuCommand cloneTableMenu(cloneTable, "clone", "Sklonuj tablicę");
-    CMenuCommand changeLengthMenu(changeLength, "change", "Zmień długość tablicy");
+    CMenuCommand *setElementMenu = new CMenuCommand(setElement, "set", "Ustaw element");
+    CMenuCommand *cloneTableMenu = new CMenuCommand(cloneTable, "clone", "Sklonuj tablicę");
+    CMenuCommand *changeLengthMenu = new CMenuCommand(changeLength, "change", "Zmień długość tablicy");
 
-    tableMenu.addMenuItem(&setElementMenu);
-    tableMenu.addMenuItem(&cloneTableMenu);
-    tableMenu.addMenuItem(&changeLengthMenu);
+    tableMenu.addMenuItem(setElementMenu);
+    tableMenu.addMenuItem(cloneTableMenu);
+    tableMenu.addMenuItem(changeLengthMenu);
     tableMenu.run();
 }
 

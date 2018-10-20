@@ -9,6 +9,7 @@ class CTableManager {
         std::vector<CTable*> m_tables;
         CTable* m_currentTable;
     public:
+        ~CTableManager();
         void addTable(CTable *newTable);
         CTable *getTable(int index);
         int getSize();

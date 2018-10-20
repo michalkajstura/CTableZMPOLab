@@ -9,11 +9,11 @@ class CMenuCommand: public CMenuItem {
         CCommand *m_command;
 
     public:
-        CMenuCommand(CCommand &command, std::string commandName, std::string name);
+        CMenuCommand(CCommand *command, std::string commandName, std::string name);
+        ~CMenuCommand();
         std::string getName() override;
         std::string getCommandName() override;
         void run() override;
-        void assignCommand(CCommand *m_command);
 };
 
 
