@@ -14,14 +14,18 @@ CMenuCommand::~CMenuCommand(){
     delete m_command;
 }
 
-std::string CMenuCommand::getName() {
+string CMenuCommand::getName() {
     return m_name;
 }
 
-std::string CMenuCommand::getCommandName() {
+string CMenuCommand::toString() {
+    return " (" + m_commandName + " " + m_command->getArgumentsInfo() + ")";
+}
+
+string CMenuCommand::getCommandName() {
     return m_commandName;
 }
 
-void CMenuCommand::run() {
-    m_command->runCommand();
+void CMenuCommand::run(vector<string> arguments) {
+    m_command->runCommand(arguments);
 }

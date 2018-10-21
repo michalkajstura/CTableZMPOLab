@@ -11,8 +11,9 @@ class CMenu: public CMenuItem {
         void showName();
         void showCommands();
         std::string getUserInput();
+        void parseUserInput(std::string userInput);
         int validateUserInput(std::string command);
-        void matchCommand(int commandIndex);
+        void matchCommand(int commandIndex, std::vector<std::string> arguments);
         std::vector<CMenuItem*> m_commands;
         bool m_nextIter;
 
@@ -21,7 +22,8 @@ class CMenu: public CMenuItem {
         ~CMenu();
         std::string getName() override;
         std::string getCommandName() override;
-        void run() override;
+        std::string toString() override;
+        void run(std::vector<std::string> arguments);
         void addMenuItem(CMenuItem *command);
         bool checkQuitLoop(std::string userInput);
 };

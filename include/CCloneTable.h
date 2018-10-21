@@ -2,11 +2,13 @@
 #define CTABLE_CCLONETABLE_H
 
 #include "CCTableCommand.h"
+#include <vector>
+#include <string>
 
 class CCloneTable : public CCTableCommand {
     public:
-        CCloneTable(CTableManager *manager) : CCTableCommand(manager) {}
-        void runCommand();
+        CCloneTable(CTableManager *manager);
+        void runCommand(std::vector<std::string> arguments);
 };
 
 

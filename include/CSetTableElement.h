@@ -6,8 +6,8 @@
 
 class CSetTableElement : public CCTableCommand {
     public:
-        CSetTableElement(CTableManager *manager) : CCTableCommand(manager){}
-        void runCommand();
+        CSetTableElement(CTableManager *manager);
+        void runCommand(std::vector<std::string> arguments);
 };
 
 

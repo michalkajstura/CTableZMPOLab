@@ -2,18 +2,18 @@
 
 using namespace std;
 
-const string INDEX_MESSAGE = "Podaj indeks: ";
-const string VALUE_MESSAGE = "Podaj wartość: ";
 const string INDEX_ERROR= "Niepoprawny indeks!";
 const string VALUE_ERROR = "Niepoprawna wartość!";
 
-void CSetTableElement::runCommand() {
-    // Get input from user
-    string userInputIndex, userInputValue;
-    cout << INDEX_MESSAGE;
-    cin >> userInputIndex;
-    cout << VALUE_MESSAGE;
-    cin >> userInputValue;
+CSetTableElement::CSetTableElement(CTableManager *manager) : CCTableCommand(manager){
+    m_arguments_info = "<index> <element>";
+    m_arguments_number = 2;
+}
+
+void CSetTableElement::runCommand(vector<string> arguments) {
+    if (!validaterNumberOfArguments(arguments.size())) return;
+    string userInputIndex = arguments.at(0);
+    string userInputValue= arguments.at(1);
 
     // Validate input
     if (!stringUtils::isInt(userInputIndex))

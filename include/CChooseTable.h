@@ -10,8 +10,8 @@ class CChooseTable : public CCTableCommand {
         bool validateIndex(std::string userInput);
         void initTableMenu();
     public:
-        CChooseTable(CTableManager *manager) : CCTableCommand(manager){}
-        void runCommand();
+        CChooseTable(CTableManager *manager);
+        void runCommand(std::vector<std::string>);
 };
 
 

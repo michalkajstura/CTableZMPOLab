@@ -8,7 +8,7 @@ class CCTableCommand: public CCommand{
         CTableManager *m_tableManager;
     public:
         CCTableCommand(CTableManager *tableManager);
-        void runCommand(){};
+        virtual void runCommand(std::vector<std::string> arguments)=0;
         CTableManager *getTableManager();
 };
 

@@ -5,8 +5,12 @@
 
 using namespace std;
 
-const string CHOOSE_TABLE_NUMBER = "Wybierz numer: ";
 const string INVALID_INDEX = "Niepoprawny indeks!";
+
+CChooseTable::CChooseTable(CTableManager *manager) : CCTableCommand(manager) {
+    m_arguments_info = "<number>";
+    m_arguments_number = 1;
+}
 
 bool CChooseTable::validateIndex(std::string userInput) {
     bool isValid = false;
@@ -32,13 +36,13 @@ void CChooseTable::initTableMenu() {
     tableMenu.addMenuItem(setElementMenu);
     tableMenu.addMenuItem(cloneTableMenu);
     tableMenu.addMenuItem(changeLengthMenu);
-    tableMenu.run();
+    tableMenu.run({});
 }
 
-void CChooseTable::runCommand() {
-    cout << CHOOSE_TABLE_NUMBER;
-    string userInput;
-    cin >> userInput;
+void CChooseTable::runCommand(vector<string> arguments) {
+    if (!validaterNumberOfArguments(arguments.size())) return;
+    string userInput = arguments.at(0);
+
 
     if (validateIndex(userInput)) {
         int index = stoi(userInput);

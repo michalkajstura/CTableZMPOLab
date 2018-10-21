@@ -5,8 +5,8 @@
 
 class CShowAllTables: public CCTableCommand {
     public:
-        CShowAllTables(CTableManager *manager) : CCTableCommand(manager) {}
-        void runCommand() override;
+        CShowAllTables(CTableManager *manager);
+        void runCommand(std::vector<std::string> arguments) override;
 };
 
 

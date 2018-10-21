@@ -2,7 +2,14 @@
 
 using namespace std;
 
-void CShowAllTables::runCommand() {
+CShowAllTables::CShowAllTables(CTableManager *manager) : CCTableCommand(manager) {
+    m_arguments_info = "";
+    m_arguments_number = 0;
+}
+
+void CShowAllTables::runCommand(vector<string> arguments) {
+    if (!validaterNumberOfArguments(arguments.size())) return;
+
     for(int i=0; i<m_tableManager->getSize(); i++) {
         cout <<  m_tableManager->getTable(i)->toString() << endl;
     }

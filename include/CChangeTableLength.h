@@ -6,8 +6,8 @@
 
 class CChangeTableLength : public CCTableCommand {
     public:
-        CChangeTableLength(CTableManager *manager) : CCTableCommand(manager){}
-        void runCommand();
+        CChangeTableLength(CTableManager *manager);
+        void runCommand(std::vector<std::string> arguments);
 };
 
 

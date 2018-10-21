@@ -6,8 +6,8 @@
 
 class CCreateTable: public CCTableCommand {
     public:
-        CCreateTable(CTableManager *manager) : CCTableCommand(manager) {}
-        void runCommand() override;
+        CCreateTable(CTableManager *manager);
+        void runCommand(std::vector<std::string> arguments) override;
 };
 
 
