@@ -16,6 +16,7 @@ class CTableManager {
         void clear();
         CTable* getCurrentTable();
         void setCurrentTable(int index);
+        void deleteTable(int index);
 };
 
 #endif //CTABLE_CTABLEMANAGER_H

@@ -32,3 +32,7 @@ CTable* CTableManager::getCurrentTable() {
 void CTableManager::setCurrentTable(int index) {
     m_currentTable = m_tables.at(index);
 }
+
+void CTableManager::deleteTable(int index){
+    m_tables.erase(m_tables.begin() + index);
+}

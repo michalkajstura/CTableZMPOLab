@@ -17,7 +17,7 @@ CTable::CTable() {
     m_size = DEFAULT_SIZE;
     m_array = new int[m_size];
     arrayUtils::fillArray(0, m_size, DEFAULT_VALUE, m_array);
-    cout << NO_PARAMETERS + m_name;
+//    cout << NO_PARAMETERS + m_name;
 }
 
 CTable::CTable(std::string name, int tableLen) {
@@ -25,18 +25,18 @@ CTable::CTable(std::string name, int tableLen) {
     m_size = tableLen;
     m_array = new int[m_size];
     arrayUtils::fillArray(0, m_size, DEFAULT_VALUE, m_array);
-    cout << WITH_PARAMETERS + m_name << endl;
+//    cout << WITH_PARAMETERS + m_name << endl;
 }
 
 CTable::CTable(const CTable &otherTable) {
     m_name = otherTable.getName() + COPY;
     m_array = nullptr;
     copyOfTable(otherTable);
-    cout << COPY_MESSAGE + otherTable.m_name << endl;
+//    cout << COPY_MESSAGE + otherTable.m_name << endl;
 }
 
 CTable::~CTable(){
-    std::cout << DELETE_MESSAGE + m_name << std::endl;
+//    std::cout << DELETE_MESSAGE + m_name << std::endl;
     delete [] m_array;
 }
 

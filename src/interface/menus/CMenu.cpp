@@ -42,7 +42,7 @@ void CMenu::run(vector<string> arguments) {
 }
 
 void CMenu::showName() {
-    cout << m_name  + ":"<< endl;
+    cout << m_name  + " (" + m_commandName + ")" + ":"<< endl;
 }
 
 void CMenu::showCommands() {

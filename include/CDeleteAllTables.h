@@ -5,10 +5,10 @@
 #include <string>
 #include <vector>
 
-class CDeleteAllTables: CCTableCommand {
+class CDeleteAllTables: public CCTableCommand {
     public:
         CDeleteAllTables(CTableManager *manager);
-        void runCommand(std::vector<std::string> arguments) override;
+        void runCommand(std::vector<std::string> arguments);
 };
 
 
