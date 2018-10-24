@@ -1,4 +1,4 @@
-#include "CSetTableElement.h"
+#include "commands/CSetTableElement.h"
 
 using namespace std;
 

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../../../include/CCommand.h"
+#include "commands/CCommand.h"
 
 using namespace std;
 

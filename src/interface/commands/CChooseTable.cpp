@@ -1,7 +1,7 @@
-#include <CSetTableElement.h>
-#include <CCloneTable.h>
-#include <CChangeTableLength.h>
-#include "CChooseTable.h"
+#include <commands/CSetTableElement.h>
+#include <commands/CCloneTable.h>
+#include <commands/CChangeTableLength.h>
+#include "commands/CChooseTable.h"
 
 using namespace std;
 

@@ -14,6 +14,7 @@ class CMenu: public CMenuItem {
         void parseUserInput(std::string userInput);
         int validateUserInput(std::string command);
         void matchCommand(int commandIndex, std::vector<std::string> arguments);
+        void printNewLines(int numberOfLines);
         std::vector<CMenuItem*> m_commands;
         bool m_nextIter;
 
@@ -26,6 +27,7 @@ class CMenu: public CMenuItem {
         void run(std::vector<std::string> arguments);
         void addMenuItem(CMenuItem *command);
         bool checkQuitLoop(std::string userInput);
+        std::vector<CMenuItem*> *getCommands();
 };
 
 #endif CTABLE_CMENU_H

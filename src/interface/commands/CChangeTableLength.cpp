@@ -1,4 +1,4 @@
-#include "CChangeTableLength.h"
+#include "commands/CChangeTableLength.h"
 
 using namespace std;
 

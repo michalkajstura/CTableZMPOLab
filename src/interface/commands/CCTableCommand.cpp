@@ -1,4 +1,4 @@
-#include "../../../include/CCTableCommand.h"
+#include "commands/CCTableCommand.h"
 
 
 CCTableCommand::CCTableCommand(CTableManager *tableManager) {

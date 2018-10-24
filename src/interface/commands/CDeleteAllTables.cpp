@@ -1,4 +1,4 @@
-#include "../../../include/CDeleteAllTables.h"
+#include "commands/CDeleteAllTables.h"
 
 using namespace std;
 

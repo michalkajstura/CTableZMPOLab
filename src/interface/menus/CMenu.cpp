@@ -29,6 +29,7 @@ void CMenu::run(vector<string> arguments) {
         cout << TO_MANY_ARGUMENTS_ERROR << endl;
         return;
     }
+//    string message = "";
     while(m_nextIter) {
         showName();
         showCommands();
@@ -38,6 +39,8 @@ void CMenu::run(vector<string> arguments) {
         } else {
             parseUserInput(userInput);
         }
+        // Print few newlines to separate from previous iteration
+        printNewLines(3);
     }
 }
 
@@ -104,5 +107,15 @@ bool CMenu::checkQuitLoop(string userInput) {
 }
 
 std::string CMenu::toString() {
-    return " (" + m_name +  m_commandName + ")";
+    return " (" + m_commandName + ")";
+}
+
+void CMenu::printNewLines(int numberOfLines) {
+    for (int i=0; i < numberOfLines; i++) {
+        cout << "\n";
+    }
+}
+
+std::vector<CMenuItem*> *CMenu::getCommands() {
+    return &m_commands;
 }

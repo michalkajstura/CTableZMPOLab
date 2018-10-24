@@ -2,7 +2,7 @@
 #define CTABLE_CMENUCOMMAND_H
 
 #include "CMenuItem.h"
-#include "CCommand.h"
+#include "commands/CCommand.h"
 
 class CMenuCommand: public CMenuItem {
     private:

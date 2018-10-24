@@ -1,4 +1,4 @@
-#include "../../../include/CCreateTable.h"
+#include "commands/CCreateTable.h"
 
 using namespace std;
 

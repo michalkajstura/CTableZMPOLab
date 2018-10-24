@@ -1,4 +1,4 @@
-#include "CCloneTable.h"
+#include "commands/CCloneTable.h"
 
 using namespace std;
 
