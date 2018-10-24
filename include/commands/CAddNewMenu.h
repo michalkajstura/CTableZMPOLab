@@ -4,8 +4,6 @@
 #include "CProgramStructureCommand.h"
 
 class CAddNewMenu : public CProgramStructureCommand {
-    private:
-        bool validateCommandName(std::string commandName);
     public:
         CAddNewMenu(CMenu *menu);
         void runCommand(std::vector<std::string> arguments);
