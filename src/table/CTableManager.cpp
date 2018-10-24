@@ -23,6 +23,7 @@ void CTableManager::clear() {
         CTable *temp = *iter;
         delete temp;
     }
+    m_tables.clear();
 }
 
 CTable* CTableManager::getCurrentTable() {
