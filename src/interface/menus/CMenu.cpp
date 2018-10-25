@@ -29,20 +29,19 @@ void CMenu::run(vector<string> arguments) {
         cout << TO_MANY_ARGUMENTS_ERROR << endl;
         return;
     }
+//    string message = "";
     while(m_nextIter) {
         showName();
         showCommands();
         string userInput = getUserInput();
-        printNewLines(2);
         if (checkQuitLoop(userInput)) {
             m_nextIter = false;
         } else {
             parseUserInput(userInput);
         }
-        // Print few newlines to separate from previous iterations
-        printNewLines(2);
+        // Print few newlines to separate from previous iteration
+        printNewLines(3);
     }
-
 }
 
 void CMenu::showName() {
