@@ -15,5 +15,3 @@ void CAddNewMenu::runCommand(std::vector<std::string> arguments) {
     if (!validateCommandName(newCommandName)) return;
     m_menu->addMenuItem(new CMenu(newCommandName, newMenuName));
 }
-
-
