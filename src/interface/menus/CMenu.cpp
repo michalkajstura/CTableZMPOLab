@@ -1,3 +1,4 @@
+#include <commands/CHelp.h>
 #include "../../../include/CMenu.h"
 #include "utils.h"
 
@@ -14,6 +15,7 @@ CMenu::CMenu(std::string commandName, std::string name=DEFAULT_NAME) {
     m_commandName = commandName;
     m_nextIter = true;          // Menu is running by default
     m_arguments_number = 0;     // Menu has no arguments
+//    addMenuItem(new CMenuCommand(new CHelp(m_commands), ))
 }
 
 CMenu::~CMenu() {
@@ -117,6 +119,5 @@ void CMenu::printNewLines(int numberOfLines) {
     }
 }
 
-std::vector<CMenuItem*> *CMenu::getCommands() {
-    return &m_commands;
+std::vector<CMenuCommand*> *CMenu::getCommands() {
 }

@@ -3,6 +3,10 @@
 
 using namespace std;
 
+CCommand::CCommand() {
+    m_help_info = "";
+}
+
 void CCommand::runCommand(vector<string> arguments) {
     cout << "Komenda domyślna" << endl;
 }
@@ -18,4 +22,8 @@ bool CCommand::validaterNumberOfArguments(int numberOfArguments) {
     } else {
         return true;
     }
+}
+
+std::string CCommand::getHelp() {
+    return m_help_info;
 }

@@ -29,3 +29,7 @@ string CMenuCommand::getCommandName() {
 void CMenuCommand::run(vector<string> arguments) {
     m_command->runCommand(arguments);
 }
+
+CCommand* CMenuCommand::getCommand() {
+    return m_command;
+}
