@@ -8,7 +8,7 @@ const int COMMAND_NOT_IN_LIST = -1;
 const string INVALID_COMMAND = "Niepoprawna komenda";
 const string DEFAULT_NAME = "Menu domyślne";
 const string TO_MANY_ARGUMENTS_ERROR = "Za dużo argumentów.";
-const string EXPECTED_SEMICOLON= "Miało być: ;";
+const string EXPECTED_SEMICOLON= "Expected: ; ";
 
 CMenu::CMenu() {
     m_nextIter = true;
@@ -163,7 +163,7 @@ bool CMenu::loadMenu(std::string stringMenu, int *index) {
         } else if (charAt == ',')
             (*index)++;
         else {
-            cerr << EXPECTED_SEMICOLON + INSTEAD + "at " + to_string(*index) << endl;
+            cerr << EXPECTED_SEMICOLON + INSTEAD + " at " + to_string(*index) << endl;
             return false;
         }
     }
@@ -187,14 +187,15 @@ std::vector<std::string> CMenu::loadHeaders(std::string stringMenu, int *index) 
         } else if (charAt == ',')
             (*index)++;
         else {
-            cout << EXPECTED_SEMICOLON + INSTEAD + charAt << endl;
+            cout << EXPECTED_SEMICOLON + INSTEAD + charAt + " at " + to_string(*index)<< endl;
             return {};
         }
     }
+    // Headers should contain commandName and name
     if (headers.size() == 2) {
         return headers;
     } else {
-        cout << INVALID_NUMBER_OF_ARGUMENTS << endl;
+        cout << INVALID_NUMBER_OF_ARGUMENTS + " at " + to_string(*index)<< endl;
         return {};
     }
 }

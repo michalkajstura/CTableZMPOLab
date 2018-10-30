@@ -61,7 +61,7 @@ bool CMenuCommand::load(std::string stringMenu, int *index) {
             (*index)++;
             stop = true;
         } else { // If it is not first the item then it should have a semicolon
-            cerr << EXPECTED_COMMA + INSTEAD + charAt + "at " + to_string(*index)<< endl;
+            cerr << EXPECTED_COMMA + INSTEAD + charAt + " at " + to_string(*index)<< endl;
             return false;
         }
     }
@@ -73,7 +73,7 @@ bool CMenuCommand::load(std::string stringMenu, int *index) {
         m_name = commandItems.at(1);
         return true;
     } else {
-        cerr << INVALID_NUMBER_OF_ARGUMENTS + "at " + to_string(*index)<< endl;
+        cerr << INVALID_NUMBER_OF_ARGUMENTS + " at " + to_string(*index)<< endl;
         return false;
     }
 }
