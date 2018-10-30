@@ -33,3 +33,9 @@ void CMenuCommand::run(vector<string> arguments) {
 CCommand* CMenuCommand::getCommand() {
     return m_command;
 }
+
+std::string CMenuCommand::save() {
+    string stringCommand = "['" + getName() + "','" + getCommandName() +
+            "','" + getCommand()->getHelp() + "']";
+    return stringCommand;
+}

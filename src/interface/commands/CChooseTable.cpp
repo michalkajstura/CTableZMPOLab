@@ -47,7 +47,7 @@ void CChooseTable::runCommand(vector<string> arguments) {
     if (validateIndex(userInput)) {
         int index = stoi(userInput);
         getTableManager()->setCurrentTable(index);
-        initTableMenu();
+//        initTableMenu();
     } else {
         cout << INVALID_INDEX << endl;
     }

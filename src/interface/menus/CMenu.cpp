@@ -5,7 +5,7 @@
 using namespace std;
 
 const int COMMAND_NOT_IN_LIST = -1;
-const string INVALID_COMMAND = "Komenda domyślna";
+const string INVALID_COMMAND = "Niepoprawna komenda";
 const string DEFAULT_NAME = "Menu domyślne";
 const string TO_MANY_ARGUMENTS_ERROR = "Za dużo argumentów.";
 
@@ -15,7 +15,7 @@ CMenu::CMenu(std::string commandName, std::string name=DEFAULT_NAME) {
     m_commandName = commandName;
     m_nextIter = true;          // Menu is running by default
     m_arguments_number = 0;     // Menu has no arguments
-//    addMenuItem(new CMenuCommand(new CHelp(m_commands), ))
+    addMenuItem(new CMenuCommand(new CHelp(m_commands), "help", "Pomoc"));
 }
 
 CMenu::~CMenu() {
@@ -31,6 +31,7 @@ void CMenu::run(vector<string> arguments) {
         cout << TO_MANY_ARGUMENTS_ERROR << endl;
         return;
     }
+    m_nextIter = true;
     while(m_nextIter) {
         showName();
         showCommands();
@@ -119,5 +120,10 @@ void CMenu::printNewLines(int numberOfLines) {
     }
 }
 
-std::vector<CMenuCommand*> *CMenu::getCommands() {
+std::string CMenu::save() {
+    string stringMenu = "('" + getName() +"','" + getCommandName() + "';" ;
+    for (int i=0; i<m_commands.size(); i++) {
+        stringMenu += m_commands.at(i)->save() + ((i == m_commands.size() - 1) ? "" : ",");
+    }
+    return stringMenu + ")";
 }

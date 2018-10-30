@@ -8,9 +8,9 @@
 class CHelp : public CCommand {
     private:
         CMenuCommand *findCommand(std::string commandName);
-        std::vector<CMenuCommand*> *m_commands;
+        std::vector<CMenuItem*> *m_commands;
     public:
-        CHelp(std::vector<CMenuCommand*> &commands);
+        CHelp(std::vector<CMenuItem*> &commands);
         virtual void runCommand(std::vector<std::string> arguments);
 };
 

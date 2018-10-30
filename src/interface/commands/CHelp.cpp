@@ -4,7 +4,7 @@ using namespace std;
 
 const string COMMAND_NOT_IN_LIST = "Nie ma takiej komendy";
 
-CHelp::CHelp(vector<CMenuCommand*> &commands){
+CHelp::CHelp(vector<CMenuItem*> &commands){
     m_arguments_number = 1;
     m_arguments_info = "<command name>";
     m_commands = &commands;
@@ -12,7 +12,10 @@ CHelp::CHelp(vector<CMenuCommand*> &commands){
 
 CMenuCommand *CHelp::findCommand(std::string commandName) {
     for (int i=0; i<m_commands->size(); i++) {
-        if (m_commands->at(i)->getCommandName() == commandName) return m_commands->at(i);
+        if (m_commands->at(i)->getCommandName() == commandName) {
+            CMenuItem *item = m_commands->at(i);
+            return dynamic_cast<CMenuCommand*>(item);
+        }
     }
     return NULL;
 }

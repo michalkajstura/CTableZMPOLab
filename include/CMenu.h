@@ -27,7 +27,7 @@ class CMenu: public CMenuItem {
         void run(std::vector<std::string> arguments);
         void addMenuItem(CMenuItem *command);
         bool checkQuitLoop(std::string userInput);
-        std::vector<CMenuCommand*> *getCommands();
+        std::string save();
 };
 
 #endif CTABLE_CMENU_H

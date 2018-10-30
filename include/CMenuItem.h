@@ -16,6 +16,7 @@ class CMenuItem {
         virtual std::string getName()=0;
         virtual std::string getCommandName()=0;
         virtual std::string toString()=0;
+        virtual std::string save()=0;
 };
 
 #endif //CTABLE_CMENUITEM_H
