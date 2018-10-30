@@ -17,9 +17,8 @@ class CMenu: public CMenuItem {
         void printNewLines(int numberOfLines);
         std::vector<CMenuItem*> m_commands;
         bool m_nextIter;
-        std::string loadString(std::string stringMenu, int *index);
         std::vector<std::string> loadHeaders(std::string stringMenu, int *index);
-        void *loadMenu(std::string stringMenu, int *index);
+        bool loadMenu(std::string stringMenu, int *index);
 
     public:
         CMenu();
@@ -31,10 +30,8 @@ class CMenu: public CMenuItem {
         void run(std::vector<std::string> arguments);
         void addMenuItem(CMenuItem *command);
         bool checkQuitLoop(std::string userInput);
-        std::vector<CMenuItem*> getCommands();
         std::string save();
-        void load(std::string stringMenu);
-        CMenuCommand *loadCommand(std::string stringMenu, int *index);
+        bool load(std::string stringMenu);
 };
 
-#endif CTABLE_CMENU_H
+#endif // CTABLE_CMENU_H

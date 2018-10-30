@@ -5,8 +5,12 @@
 #include <iostream>
 #include <vector>
 
+const std::string INSTEAD = "Zamiast tego jest: ";
+const std::string EXPECTED_COMMA = "Miało być: ,";
+
 class CMenuItem {
     protected:
+        std::string loadString(std::string bigString, int *index);
         std::string m_commandName;
         std::string m_name;
         int m_arguments_number;
