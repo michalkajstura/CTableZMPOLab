@@ -27,3 +27,7 @@ bool CCommand::validaterNumberOfArguments(int numberOfArguments) {
 std::string CCommand::getHelp() {
     return m_help_info;
 }
+
+void CCommand::setHelp(string help) {
+    m_help_info =  help;
+}

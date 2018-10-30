@@ -16,6 +16,8 @@ class CCommand {
         virtual void runCommand(std::vector<std::string> arguments);
         std::string getArgumentsInfo();
         std::string getHelp();
+        void setHelp(std::string help);
+
 };
 
 

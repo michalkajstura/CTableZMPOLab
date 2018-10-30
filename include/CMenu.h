@@ -17,17 +17,24 @@ class CMenu: public CMenuItem {
         void printNewLines(int numberOfLines);
         std::vector<CMenuItem*> m_commands;
         bool m_nextIter;
+        std::string loadString(std::string stringMenu, int *index);
+        std::vector<std::string> loadHeaders(std::string stringMenu, int *index);
+        void *loadMenu(std::string stringMenu, int *index);
 
     public:
+        CMenu();
         CMenu(std::string commandName, std::string name);
         ~CMenu();
-        std::string getName() override;
-        std::string getCommandName() override;
-        std::string toString() override;
+        std::string getName();
+        std::string getCommandName();
+        std::string toString();
         void run(std::vector<std::string> arguments);
         void addMenuItem(CMenuItem *command);
         bool checkQuitLoop(std::string userInput);
+        std::vector<CMenuItem*> getCommands();
         std::string save();
+        void load(std::string stringMenu);
+        CMenuCommand *loadCommand(std::string stringMenu, int *index);
 };
 
 #endif CTABLE_CMENU_H

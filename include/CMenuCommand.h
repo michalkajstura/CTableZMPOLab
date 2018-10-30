@@ -14,8 +14,8 @@ class CMenuCommand: public CMenuItem {
         std::string getCommandName() override;
         std::string toString() override;
         void run(std::vector<std::string> arguments);
-        CCommand *getCommand();
         std::string save();
+        CCommand *getCommand();
 
 };
 
