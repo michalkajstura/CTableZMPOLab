@@ -22,23 +22,6 @@ bool CChooseTable::validateIndex(std::string userInput) {
     return isValid;
 }
 
-void CChooseTable::initTableMenu() {
-    CMenu tableMenu("Table menu", "tab");
-
-    CCommand *setElement = new  CSetTableElement(getTableManager());
-    CCommand *cloneTable = new CCloneTable(getTableManager());
-    CCommand *changeLength = new CChangeTableLength(getTableManager());
-
-    CMenuCommand *setElementMenu = new CMenuCommand(setElement, "set", "Ustaw element");
-    CMenuCommand *cloneTableMenu = new CMenuCommand(cloneTable, "clone", "Sklonuj tablicę");
-    CMenuCommand *changeLengthMenu = new CMenuCommand(changeLength, "change", "Zmień długość tablicy");
-
-    tableMenu.addMenuItem(setElementMenu);
-    tableMenu.addMenuItem(cloneTableMenu);
-    tableMenu.addMenuItem(changeLengthMenu);
-    tableMenu.run({});
-}
-
 void CChooseTable::runCommand(vector<string> arguments) {
     if (!validaterNumberOfArguments(arguments.size())) return;
     string userInput = arguments.at(0);

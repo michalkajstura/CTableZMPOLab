@@ -13,6 +13,7 @@ const string EXPECTED_SEMICOLON= "Expected: ; ";
 CMenu::CMenu() {
     m_nextIter = true;
     m_arguments_number = 0;
+    m_root = NULL;
 }
 
 CMenu::CMenu(std::string commandName, std::string name=DEFAULT_NAME) {
@@ -20,7 +21,8 @@ CMenu::CMenu(std::string commandName, std::string name=DEFAULT_NAME) {
     m_commandName = commandName;
     m_nextIter = true;          // Menu is running by default
     m_arguments_number = 0;     // Menu has no arguments
-    addMenuItem(new CMenuCommand(new CHelp(m_commands), "help", "Pomoc"));
+    m_root = NULL;
+//    addMenuItem(new CMenuCommand(new CHelp(m_commands), "help", "Pomoc"));
 }
 
 CMenu::~CMenu() {
@@ -42,9 +44,12 @@ void CMenu::run(vector<string> arguments) {
         showCommands();
         string userInput = getUserInput();
         printNewLines(2);
-        if (checkQuitLoop(userInput)) {
+        if (userInput == "back") {
             m_nextIter = false;
-        } else {
+        } else if (userInput == "search") {
+
+
+        } else{
             parseUserInput(userInput);
         }
         // Print few newlines to separate from previous iterations
@@ -108,11 +113,17 @@ std::string CMenu::getCommandName() {
 }
 
 void CMenu::addMenuItem(CMenuItem *command){
-    m_commands.push_back(command);
-}
-
-bool CMenu::checkQuitLoop(string userInput) {
-    return userInput == "back";
+    CMenu *menu = dynamic_cast<CMenu*>(command);
+    if (menu == NULL) {
+        m_commands.push_back(command);
+    } else {
+        // if current menu is root, set child's root to 'this'
+        if (getRoot() == NULL)
+            menu->setRoot(this);
+        else
+            menu->setRoot(getRoot());
+        m_commands.push_back(menu);
+    }
 }
 
 std::string CMenu::toString() {
@@ -158,6 +169,7 @@ bool CMenu::loadMenu(std::string stringMenu, int *index) {
             addMenuItem(command);
         } else if (charAt == '(') {
             CMenu *menu = new CMenu();
+            menu->setRoot(this);
             menu->loadMenu(stringMenu, index);
             addMenuItem(menu);
         } else if (charAt == ',')
@@ -167,6 +179,7 @@ bool CMenu::loadMenu(std::string stringMenu, int *index) {
             return false;
         }
     }
+    (*index)++;
     return true;
 }
 
@@ -200,3 +213,46 @@ std::vector<std::string> CMenu::loadHeaders(std::string stringMenu, int *index) 
     }
 }
 
+bool CMenu::matchMetaCommand(std::string userInput) {
+    // Tries to match one of meta commands (back, search, help)
+    // and execute the command if the match is successful
+    vector<string> splitted = stringUtils::splitString(userInput);
+    string command= splitted.at(0);
+    string argument = splitted.at(1);
+    if (command== "back") {
+        m_nextIter = false;
+        return true;
+    } else if (command == "search") {
+        findPath(argument);
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+std::string CMenu::findPath(std::string commandName) {
+    vector<string> paths;
+    return findPath(commandName, this, "");
+}
+
+std::string CMenu::findPath(string commandName, CMenu *menu, string acc) {
+    string allPaths = "";
+    for (int i=0; i<menu->m_commands.size(); i++) {
+        CMenuItem *item = menu->m_commands.at(i);
+        if (item->getCommandName() == commandName)
+            allPaths += acc + "->" + menu->getCommandName() + "->" + commandName + "\n";
+        CMenu *menuCasted = dynamic_cast<CMenu*>(item);
+        if (menuCasted != NULL)
+            allPaths += findPath(commandName, menuCasted, acc + "->" + menu->getCommandName());
+    }
+    return allPaths;
+}
+
+CMenu* CMenu::getRoot() {
+    return m_root;
+}
+
+void CMenu::setRoot(CMenu *root) {
+    m_root = root;
+}

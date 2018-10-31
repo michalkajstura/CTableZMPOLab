@@ -15,10 +15,13 @@ class CMenu: public CMenuItem {
         int validateUserInput(std::string command);
         void matchCommand(int commandIndex, std::vector<std::string> arguments);
         void printNewLines(int numberOfLines);
-        std::vector<CMenuItem*> m_commands;
-        bool m_nextIter;
         std::vector<std::string> loadHeaders(std::string stringMenu, int *index);
         bool loadMenu(std::string stringMenu, int *index);
+        std::string findPath(std::string commandName, CMenu* menu, std::string acc);//, std:vector<std::string> *paths);
+        bool matchMetaCommand(std::string userInput);
+        CMenu *m_root;
+        bool m_nextIter;
+        std::vector<CMenuItem*> m_commands;
 
     public:
         CMenu();
@@ -29,9 +32,11 @@ class CMenu: public CMenuItem {
         std::string toString();
         void run(std::vector<std::string> arguments);
         void addMenuItem(CMenuItem *command);
-        bool checkQuitLoop(std::string userInput);
         std::string save();
         bool load(std::string stringMenu);
+        CMenu *getRoot();
+        void setRoot(CMenu *root);
+        std::string findPath(std::string commandName);
 };
 
 #endif // CTABLE_CMENU_H
