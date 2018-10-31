@@ -13,16 +13,13 @@ const string EXPECTED_SEMICOLON= "Expected: ; ";
 CMenu::CMenu() {
     m_nextIter = true;
     m_arguments_number = 0;
-    m_root = NULL;
+    m_root = this;
 }
 
 CMenu::CMenu(std::string commandName, std::string name=DEFAULT_NAME) {
+    CMenu();
     m_name = name;
     m_commandName = commandName;
-    m_nextIter = true;          // Menu is running by default
-    m_arguments_number = 0;     // Menu has no arguments
-    m_root = NULL;
-//    addMenuItem(new CMenuCommand(new CHelp(m_commands), "help", "Pomoc"));
 }
 
 CMenu::~CMenu() {
@@ -44,12 +41,8 @@ void CMenu::run(vector<string> arguments) {
         showCommands();
         string userInput = getUserInput();
         printNewLines(2);
-        if (userInput == "back") {
-            m_nextIter = false;
-        } else if (userInput == "search") {
-
-
-        } else{
+        if (matchMetaCommand(userInput)){
+        } else {
             parseUserInput(userInput);
         }
         // Print few newlines to separate from previous iterations
@@ -144,8 +137,6 @@ std::string CMenu::save() {
     return stringMenu + ")";
 }
 
-
-
 bool CMenu::load(std::string stringMenu) {
     int index = 0;
     return loadMenu(stringMenu, &index);
@@ -217,23 +208,23 @@ bool CMenu::matchMetaCommand(std::string userInput) {
     // Tries to match one of meta commands (back, search, help)
     // and execute the command if the match is successful
     vector<string> splitted = stringUtils::splitString(userInput);
-    string command= splitted.at(0);
-    string argument = splitted.at(1);
+    string command = splitted.at(0);
+
     if (command== "back") {
         m_nextIter = false;
-        return true;
-    } else if (command == "search") {
-        findPath(argument);
-        return true;
+    } else if (command == "search" && splitted.size() == 2) {
+        cout << findPath(splitted.at(1)) << endl;
+    } else if (command == "help" && splitted.size() == 2) {
+        showHelp(splitted.at(1));
     } else {
         return false;
     }
-
+    return true;
 }
 
 std::string CMenu::findPath(std::string commandName) {
     vector<string> paths;
-    return findPath(commandName, this, "");
+    return findPath(commandName, m_root, "");
 }
 
 std::string CMenu::findPath(string commandName, CMenu *menu, string acc) {
@@ -255,4 +246,15 @@ CMenu* CMenu::getRoot() {
 
 void CMenu::setRoot(CMenu *root) {
     m_root = root;
+}
+
+void CMenu::showHelp(std::string commandName) {
+    for (int i=0; i<m_commands.size(); i++) {
+        CMenuCommand *command = dynamic_cast<CMenuCommand*>(m_commands.at(i));
+        if (command != NULL) {
+            cout << command->getCommand()->getHelp() << endl;
+            return;
+        }
+    }
+    cout << COMMAND_NOT_IN_LIST << endl;
 }

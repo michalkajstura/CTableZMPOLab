@@ -19,6 +19,7 @@ class CMenu: public CMenuItem {
         bool loadMenu(std::string stringMenu, int *index);
         std::string findPath(std::string commandName, CMenu* menu, std::string acc);//, std:vector<std::string> *paths);
         bool matchMetaCommand(std::string userInput);
+        void showHelp(std::string commandName);
         CMenu *m_root;
         bool m_nextIter;
         std::vector<CMenuItem*> m_commands;
